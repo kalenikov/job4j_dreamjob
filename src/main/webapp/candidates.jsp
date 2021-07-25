@@ -39,7 +39,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Candidate can : Store.instOf().findAllCandidates()) { %>
+                    <% for (Candidate can : Store.getInstance().findAllCandidates()) { %>
                     <tr>
                         <td><%= can.getId() %>
                         </td>

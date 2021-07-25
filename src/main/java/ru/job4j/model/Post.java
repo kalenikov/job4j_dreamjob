@@ -1,10 +1,11 @@
 package ru.job4j.model;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Post {
-    private final int id;
+    private int id;
     private String name;
     private String description;
     private final Timestamp created;
@@ -14,6 +15,10 @@ public class Post {
         this.name = name;
         this.description = description;
         this.created = created;
+    }
+
+    public Post(int id, String name) {
+        this(id, name, null, Timestamp.valueOf(LocalDateTime.now()));
     }
 
     public int getId() {
@@ -30,6 +35,10 @@ public class Post {
 
     public Timestamp getCreated() {
         return created;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

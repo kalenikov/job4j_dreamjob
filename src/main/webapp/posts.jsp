@@ -41,7 +41,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Post post : Store.instOf().findAll()) { %>
+                    <% for (Post post : Store.getInstance().findAll()) { %>
                     <tr>
                         <td><%= post.getId() %>
                         </td>

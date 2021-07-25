@@ -8,11 +8,13 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Store {
     private static final Store INST = new Store();
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private static AtomicInteger POST_ID = new AtomicInteger(10);
 
     private Store() {
         posts.put(1, new Post(1, "name1", "desc1", Timestamp.valueOf(LocalDateTime.now())));
@@ -23,7 +25,7 @@ public class Store {
         candidates.put(3, new Candidate(3, "Senior Java"));
     }
 
-    public static Store instOf() {
+    public static Store getInstance() {
         return INST;
     }
 
@@ -33,5 +35,10 @@ public class Store {
 
     public Collection<Candidate> findAllCandidates() {
         return candidates.values();
+    }
+
+    public void save(Post post){
+        post.setId(POST_ID.incrementAndGet());
+        posts.put(post.getId(), post);
     }
 }
