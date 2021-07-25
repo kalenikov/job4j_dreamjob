@@ -3,19 +3,19 @@ package ru.job4j.model;
 import java.util.Objects;
 
 public class Candidate {
-    private int id;
+    private Integer id;
     private String name;
 
-    public Candidate(int id, String name) {
+    public Candidate(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -32,12 +32,11 @@ public class Candidate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Candidate candidate = (Candidate) o;
-        return id == candidate.id &&
-                Objects.equals(name, candidate.name);
+        return Objects.equals(id, candidate.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
     }
 }

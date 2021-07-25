@@ -5,19 +5,19 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Post {
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private final Timestamp created;
 
-    public Post(int id, String name, String description, Timestamp created) {
+    public Post(Integer id, String name, String description, Timestamp created) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
     }
 
-    public Post(int id, String name) {
+    public Post(Integer id, String name) {
         this(id, name, null, Timestamp.valueOf(LocalDateTime.now()));
     }
 
@@ -37,7 +37,7 @@ public class Post {
         return created;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,7 +46,7 @@ public class Post {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return id == post.id;
+        return Objects.equals(id, post.id);
     }
 
     @Override
