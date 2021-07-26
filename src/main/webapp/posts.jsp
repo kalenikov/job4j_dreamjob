@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.job4j.store.Store" %>
 <%@ page import="ru.job4j.model.Post" %>
+<%@ page import="java.util.Collection" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -41,7 +41,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Post post : Store.getInstance().findAll()) { %>
+                    <% for (Post post : (Collection<Post>) request.getAttribute("posts")) { %>
                     <tr>
                         <td><%= post.getId() %>
                         </td>
