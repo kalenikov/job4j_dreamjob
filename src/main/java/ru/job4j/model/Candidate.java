@@ -3,10 +3,10 @@ package ru.job4j.model;
 import java.util.Objects;
 
 public class Candidate {
-    private Integer id;
+    private int id;
     private String name;
 
-    public Candidate(Integer id, String name) {
+    public Candidate(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -15,7 +15,7 @@ public class Candidate {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -32,7 +32,7 @@ public class Candidate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Candidate candidate = (Candidate) o;
-        return Objects.equals(id, candidate.id);
+        return id == candidate.id;
     }
 
     @Override
