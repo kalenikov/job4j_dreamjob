@@ -17,8 +17,8 @@ public class Post {
         this.created = created;
     }
 
-    public Post(Integer id, String name) {
-        this(id, name, null, Timestamp.valueOf(LocalDateTime.now()));
+    public Post(Integer id, String name, String description) {
+        this(id, name, description, Timestamp.valueOf(LocalDateTime.now()));
     }
 
     public int getId() {

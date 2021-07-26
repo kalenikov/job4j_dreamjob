@@ -14,7 +14,8 @@ public class PostServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         Store.getInstance().save(
                 new Post(Integer.valueOf(req.getParameter("id")),
-                        req.getParameter("name")
+                        req.getParameter("name"),
+                        req.getParameter("description")
                 )
         );
         resp.sendRedirect(req.getContextPath() + "/posts.jsp");

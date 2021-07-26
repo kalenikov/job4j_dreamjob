@@ -26,7 +26,7 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Post post = new Post(0, "");
+    Post post = new Post(0, "", "");
     if (id != null) {
         post = Store.getInstance().findPostById(Integer.valueOf(id));
     }
@@ -46,6 +46,8 @@
                     <div class="form-group">
                         <label>Название</label>
                         <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
+                        <label>Описание вакансии</label>
+                        <input type="text" class="form-control" name="description" value="<%=post.getDescription()%>">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
