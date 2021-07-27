@@ -36,6 +36,7 @@
                     <tr>
                         <th>id</th>
                         <th>name</th>
+                        <th>photo</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,6 +49,23 @@
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${candidate.name}"/>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col">
+                                        <img src="<c:url value="/download?name=${candidate.id}"/>"
+                                             width="100px" height="100px"
+                                             alt="candidate photo"/>
+                                    </div>
+                                    <div class="col">
+                                        <a href='<c:url value="/PhotoUpload.jsp?id=${candidate.id}"/>'>
+                                            <i class="fa fa-plus-circle"></i>
+                                        </a>
+                                        <a href='<c:url value="/candidates.do?id=${candidate.id}&action=DELETE"/>'>
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </c:forEach>
