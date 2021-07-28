@@ -35,25 +35,3 @@
         <button type="submit" class="btn btn-default">submit</button>
     </form>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
