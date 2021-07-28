@@ -16,18 +16,18 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import ru.job4j.PropertySource;
 
-import static ru.job4j.Config.IMAGE_DIR;
 
 public class UploadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<String> images = new ArrayList<>();
-        for (File name : new File(IMAGE_DIR).listFiles()) {
+        for (File name : new File(PropertySource.get("IMAGE_DIR")).listFiles()) {
             images.add(name.getName());
         }
         req.setAttribute("images", images);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/upload.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/upload.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -41,7 +41,7 @@ public class UploadServlet extends HttpServlet {
         String fileName = req.getParameter("fileName");
         try {
             List<FileItem> items = upload.parseRequest(req);
-            File folder = new File(IMAGE_DIR);
+            File folder = new File(PropertySource.get("IMAGE_DIR"));
             if (!folder.exists()) {
                 folder.mkdir();
             }

@@ -45,7 +45,7 @@
                             <td><c:out value="${candidate.id}"/>
                             </td>
                             <td>
-                                <a href='<c:url value="/candidate/edit.jsp?id=${candidate.id}"/>'>
+                                <a href='<c:url value="/WEB-INF/jsp/candidates/edit.jsp?id=${candidate.id}"/>'>
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${candidate.name}"/>
@@ -58,7 +58,7 @@
                                              alt="candidate photo"/>
                                     </div>
                                     <div class="col">
-                                        <a href='<c:url value="/PhotoUpload.jsp?id=${candidate.id}"/>'>
+                                        <a href='<c:url value="/WEB-INF/jsp/candidates/photoUpload.jsp?id=${candidate.id}"/>'>
                                             <i class="fa fa-plus-circle"></i>
                                         </a>
                                         <a href='<c:url value="/candidates.do?id=${candidate.id}&action=DELETE"/>'>

@@ -1,5 +1,7 @@
 package ru.job4j.servlet;
 
+import ru.job4j.PropertySource;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,14 +10,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static ru.job4j.Config.IMAGE_DIR;
-
 public class DownloadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         File downloadFile = null;
-        for (File file : new File(IMAGE_DIR).listFiles()) {
+        for (File file : new File(PropertySource.get("IMAGE_DIR")).listFiles()) {
             if (name.equals(file.getName())) {
                 downloadFile = file;
                 break;

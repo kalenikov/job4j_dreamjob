@@ -4,6 +4,12 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
+    <listener>
+        <listener-class>
+            ru.job4j.listener.AppServletContextListener
+        </listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>PostServlet</servlet-name>
         <servlet-class>ru.job4j.servlet.PostServlet</servlet-class>
@@ -45,4 +51,6 @@
         <servlet-name>UploadServlet</servlet-name>
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
+
+
 </web-app>

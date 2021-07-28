@@ -1,5 +1,6 @@
 package ru.job4j.servlet;
 
+import ru.job4j.PropertySource;
 import ru.job4j.model.Candidate;
 import ru.job4j.store.MemStore;
 
@@ -11,8 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static ru.job4j.Config.IMAGE_DIR;
-
 public class CandidateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,7 +20,7 @@ public class CandidateServlet extends HttpServlet {
             return;
         }
         req.setAttribute("candidates", MemStore.getInstance().findAllCandidates());
-        req.getRequestDispatcher("candidates.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/candidates/candidates.jsp").forward(req, resp);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class CandidateServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         MemStore.getInstance().removeById(Integer.parseInt(id));
-        Files.deleteIfExists(Paths.get(IMAGE_DIR, id));
+        Files.deleteIfExists(Paths.get(PropertySource.get("IMAGE_DIR"), id));
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 }
