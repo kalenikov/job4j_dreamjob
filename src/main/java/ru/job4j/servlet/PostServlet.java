@@ -1,7 +1,7 @@
 package ru.job4j.servlet;
 
 import ru.job4j.model.Post;
-import ru.job4j.store.Store;
+import ru.job4j.store.MemStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,14 +14,14 @@ import java.io.IOException;
 public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("posts", Store.getInstance().findAllPosts());
+        req.setAttribute("posts", MemStore.getInstance().findAllPosts());
         req.getRequestDispatcher("posts.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
-        Store.getInstance().save(
+        MemStore.getInstance().save(
                 new Post(
                         Integer.valueOf(req.getParameter("id")),
                         req.getParameter("name"),

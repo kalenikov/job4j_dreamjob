@@ -1,7 +1,7 @@
 package ru.job4j.servlet;
 
 import ru.job4j.model.Candidate;
-import ru.job4j.store.Store;
+import ru.job4j.store.MemStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,14 +20,14 @@ public class CandidateServlet extends HttpServlet {
             doDelete(req, resp);
             return;
         }
-        req.setAttribute("candidates", Store.getInstance().findAllCandidates());
+        req.setAttribute("candidates", MemStore.getInstance().findAllCandidates());
         req.getRequestDispatcher("candidates.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
-        Store.getInstance().save(
+        MemStore.getInstance().save(
                 new Candidate(
                         Integer.parseInt(req.getParameter("id")),
                         req.getParameter("name")
@@ -39,7 +39,7 @@ public class CandidateServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        Store.getInstance().removeById(Integer.parseInt(id));
+        MemStore.getInstance().removeById(Integer.parseInt(id));
         Files.deleteIfExists(Paths.get(IMAGE_DIR, id));
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
