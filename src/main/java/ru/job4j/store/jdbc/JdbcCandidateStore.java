@@ -15,12 +15,12 @@ import java.util.List;
 
 @Slf4j
 public class JdbcCandidateStore implements Store<Candidate> {
-    private final Connection cn = ConnectionPool.getConnection();
 
     @Override
     public Collection<Candidate> findAll() {
         List<Candidate> rsl = new ArrayList<>();
-        try (PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates")
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -46,7 +46,8 @@ public class JdbcCandidateStore implements Store<Candidate> {
     }
 
     private void update(Candidate candidate) {
-        try (PreparedStatement ps = cn.prepareStatement("update candidates set name=? where id=?")) {
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("update candidates set name=? where id=?")) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getId());
             ps.executeUpdate();
@@ -56,8 +57,9 @@ public class JdbcCandidateStore implements Store<Candidate> {
     }
 
     private void create(Candidate candidate) {
-        try (PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(name) VALUES (?)",
-                PreparedStatement.RETURN_GENERATED_KEYS)
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidates(name) VALUES (?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
             ps.execute();
@@ -74,7 +76,8 @@ public class JdbcCandidateStore implements Store<Candidate> {
 
     @Override
     public Candidate findById(int id) {
-        try (PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates WHERE id=?")) {
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidates WHERE id=?")) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {

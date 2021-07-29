@@ -20,7 +20,8 @@ public class JdbcPostStore implements Store<Post> {
     @Override
     public Collection<Post> findAll() {
         List<Post> posts = new ArrayList<>();
-        try (PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")) {
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
                     posts.add(new Post(
@@ -36,8 +37,9 @@ public class JdbcPostStore implements Store<Post> {
     }
 
     private void create(Post post) {
-        try (PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
-                PreparedStatement.RETURN_GENERATED_KEYS)
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
             ps.execute();
@@ -62,7 +64,8 @@ public class JdbcPostStore implements Store<Post> {
 
     @Override
     public Post findById(int id) {
-        try (PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id=?")) {
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post WHERE id=?")) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
@@ -80,7 +83,8 @@ public class JdbcPostStore implements Store<Post> {
     }
 
     private void update(Post post) {
-        try (PreparedStatement ps = cn.prepareStatement("update post set name=?, description=? where id=?")) {
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("update post set name=?, description=? where id=?")) {
             ps.setString(1, post.getName());
             ps.setString(2, post.getDescription());
             ps.setInt(3, post.getId());
