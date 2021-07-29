@@ -1,16 +1,11 @@
 package ru.job4j.store;
 
-import ru.job4j.model.Candidate;
-import ru.job4j.model.Post;
-
 import java.util.Collection;
 
-public interface Store {
-    Collection<Post> findAllPosts();
+public interface Store<T> {
+    Collection<T> findAll();
 
-    Collection<Candidate> findAllCandidates();
+    void save(T post);
 
-    void save(Post post);
-
-    Post findById(int id);
+    T findById(int id);
 }
