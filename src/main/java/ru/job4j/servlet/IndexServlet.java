@@ -1,7 +1,5 @@
 package ru.job4j.servlet;
 
-import ru.job4j.PropertySource;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
