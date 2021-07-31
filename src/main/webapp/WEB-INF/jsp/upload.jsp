@@ -1,15 +1,8 @@
-<%@ page language="java" pageEncoding="UTF-8" session="true" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Upload</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-</head>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
+<html>
+<jsp:include page='navBar.jsp'/>
 <body>
-
 <div class="container">
     <table class="table">
         <thead>

@@ -93,6 +93,17 @@ public class JdbcCandidateStore implements Store<Candidate> {
         return null;
     }
 
+    @Override
+    public void removeById(int id) {
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("delete from candidates where id=?")) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         Store<Candidate> store = new JdbcCandidateStore();
         store.save(new Candidate(0, "name1"));

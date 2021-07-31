@@ -27,7 +27,8 @@ public class JdbcPostStore implements Store<Post> {
                     posts.add(new Post(
                             it.getInt("id"),
                             it.getString("name"),
-                            it.getString("description")));
+                            it.getString("description"),
+                            it.getTimestamp("created")));
                 }
             }
         } catch (Exception e) {
@@ -38,10 +39,12 @@ public class JdbcPostStore implements Store<Post> {
 
     private void create(Post post) {
         try (Connection cn = ConnectionPool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name, description, created) VALUES (?,?,?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
+            ps.setString(2, post.getDescription());
+            ps.setTimestamp(3, post.getCreated());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -72,7 +75,8 @@ public class JdbcPostStore implements Store<Post> {
                     return new Post(
                             it.getInt("id"),
                             it.getString("name"),
-                            it.getString("description")
+                            it.getString("description"),
+                            it.getTimestamp("created")
                     );
                 }
             }
@@ -80,6 +84,17 @@ public class JdbcPostStore implements Store<Post> {
             log.error(e.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public void removeById(int id) {
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("delete from post where id=?")) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
     }
 
     private void update(Post post) {

@@ -8,4 +8,6 @@ public interface Store<T> {
     void save(T post);
 
     T findById(int id);
+
+    void removeById(int id);
 }

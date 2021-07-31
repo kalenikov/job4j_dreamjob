@@ -3,8 +3,6 @@ package ru.job4j.store;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -15,7 +13,7 @@ public class ConnectionPool {
 
     private ConnectionPool() {
         Properties cfg = new Properties();
-        try (BufferedReader io = new BufferedReader(new FileReader("db.properties"))) {
+        try (var io = ConnectionPool.class.getClassLoader().getResourceAsStream("db.properties")) {
             cfg.load(io);
         } catch (Exception e) {
             throw new IllegalStateException(e);
