@@ -8,25 +8,33 @@
     <script src="https://use.fontawesome.com/6a99d19799.js"></script>
     <title>Работа мечты</title>
 </head>
-<%
-    String path = request.getContextPath();
-%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <div class="row">
     <ul class="nav">
         <li class="nav-item">
-            <a class="nav-link" href="<%=path%>/WEB-INF/jsp/login.jsp">Login</a>
+            <a class="nav-link" href=<c:out value="${path}"/>/auth.do>
+                <c:choose>
+                    <c:when test="${user == null}">
+                        Login
+                    </c:when>
+                    <c:otherwise>
+                        Logout &nbsp;
+                        <c:out value="${user.name}"/>
+                    </c:otherwise>
+                </c:choose>
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="<%=path%>/posts.do">Posts</a>
+            <a class="nav-link" href=<c:out value="${path}"/>/posts.do>Posts</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="<%=path%>/posts.do?action=NEW">Add post</a>
+            <a class="nav-link" href=<c:out value="${path}"/>/posts.do?action=NEW>Add post</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="<%=path%>/candidates.do">Candidates</a>
+            <a class="nav-link" href=<c:out value="${path}"/>/candidates.do>Candidates</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="<%=path%>/candidates.do?action=NEW">Add candidate</a>
+            <a class="nav-link" href=<c:out value="${path}"/>/candidates.do?action=NEW>Add candidate</a>
         </li>
     </ul>
 </div>
