@@ -14,6 +14,9 @@
 <div class="row">
     <ul class="nav">
         <li class="nav-item">
+            <a class="nav-link" href="<%=path%>/WEB-INF/jsp/login.jsp">Login</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="<%=path%>/posts.do">Posts</a>
         </li>
         <li class="nav-item">
