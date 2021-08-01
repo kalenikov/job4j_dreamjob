@@ -14,10 +14,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class CandidateServlet extends HttpServlet {
-    private final Store<Candidate> repo = new JdbcCandidateStore();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Store<Candidate> repo = JdbcCandidateStore.getInstance();
         String action = req.getParameter("action");
         if ("DELETE".equals(action)) {
             doDelete(req, resp);
@@ -36,6 +36,7 @@ public class CandidateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Store<Candidate> repo = JdbcCandidateStore.getInstance();
         req.setCharacterEncoding("UTF-8");
         int id = !req.getParameter("id").isEmpty()
                 ? Integer.parseInt(req.getParameter("id"))
@@ -46,6 +47,7 @@ public class CandidateServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Store<Candidate> repo = JdbcCandidateStore.getInstance();
         String id = req.getParameter("id");
         repo.removeById(Integer.parseInt(id));
         Files.deleteIfExists(Paths.get(PropertySource.get("IMAGE_DIR"), id));

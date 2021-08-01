@@ -15,7 +15,17 @@ import java.util.List;
 
 @Slf4j
 public class JdbcPostStore implements Store<Post> {
-    private final Connection cn = ConnectionPool.getConnection();
+
+    private JdbcPostStore() {
+    }
+
+    private static class StoreHolder {
+        public static final JdbcPostStore HOLDER_INSTANCE = new JdbcPostStore();
+    }
+
+    public static JdbcPostStore getInstance() {
+        return StoreHolder.HOLDER_INSTANCE;
+    }
 
     @Override
     public Collection<Post> findAll() {

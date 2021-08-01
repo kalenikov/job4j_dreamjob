@@ -13,10 +13,10 @@ import java.io.IOException;
 
 @WebServlet
 public class PostServlet extends HttpServlet {
-    private final Store<Post> repo = new JdbcPostStore();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Store<Post> repo = JdbcPostStore.getInstance();
         req.setAttribute("user", req.getSession().getAttribute("user"));
         String action = req.getParameter("action");
         if ("NEW".equals(action)) {
@@ -34,6 +34,7 @@ public class PostServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Store<Post> repo = JdbcPostStore.getInstance();
         req.setCharacterEncoding("UTF-8");
         int id = !req.getParameter("id").isEmpty()
                 ? Integer.parseInt(req.getParameter("id"))

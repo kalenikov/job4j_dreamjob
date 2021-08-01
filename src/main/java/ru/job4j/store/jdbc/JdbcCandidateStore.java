@@ -15,6 +15,16 @@ import java.util.List;
 
 @Slf4j
 public class JdbcCandidateStore implements Store<Candidate> {
+    private JdbcCandidateStore() {
+    }
+
+    private static class StoreHolder {
+        public static final JdbcCandidateStore HOLDER_INSTANCE = new JdbcCandidateStore();
+    }
+
+    public static JdbcCandidateStore getInstance() {
+        return StoreHolder.HOLDER_INSTANCE;
+    }
 
     @Override
     public Collection<Candidate> findAll() {
