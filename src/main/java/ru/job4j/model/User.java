@@ -15,6 +15,10 @@ public class User {
         this.password = password;
     }
 
+    public User(String name, String email, String password) {
+        this(0, name, email, password);
+    }
+
     public User() {
     }
 

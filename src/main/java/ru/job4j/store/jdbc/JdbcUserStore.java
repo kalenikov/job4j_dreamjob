@@ -3,7 +3,7 @@ package ru.job4j.store.jdbc;
 import lombok.extern.slf4j.Slf4j;
 import ru.job4j.model.User;
 import ru.job4j.store.ConnectionPool;
-import ru.job4j.store.Store;
+import ru.job4j.store.UserStore;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Slf4j
-public class JdbcUserStore implements Store<User> {
+public class JdbcUserStore implements UserStore {
 
     private JdbcUserStore() {
     }
@@ -118,4 +118,26 @@ public class JdbcUserStore implements Store<User> {
             log.error(e.getMessage());
         }
     }
+
+    @Override
+    public User findByEmail(String email) {
+        try (Connection cn = ConnectionPool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE email=?")) {
+            ps.setString(1, email);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new User(
+                            it.getInt("id"),
+                            it.getString("name"),
+                            it.getString("email"),
+                            it.getString("password")
+                    );
+                }
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
 }

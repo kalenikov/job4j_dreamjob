@@ -8,31 +8,21 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Login
+                Registration form
             </div>
             <div class="card-body">
-                <form action="<%=request.getContextPath()%>/auth.do" method="post">
+                <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name">
                         <label>Email</label>
                         <input type="text" class="form-control" name="email">
-                    </div>
-                    <div class="form-group">
                         <label>Password</label>
                         <input type="password" class="form-control" name="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                    <c:if test="${not empty error}">
-                        <div style="color:red; font-weight: bold; margin: 30px 0;">
-                                ${error}
-                        </div>
-                    </c:if>
+                    <button type="submit" class="btn btn-primary">Register</button>
                 </form>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="card-header">
-            <a href="<%=request.getContextPath()%>/reg.do"> Registration</a>
         </div>
     </div>
 </div>
