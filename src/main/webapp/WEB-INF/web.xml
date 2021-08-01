@@ -4,6 +4,16 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.job4j.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>
             ru.job4j.listener.AppServletContextListener
@@ -35,6 +45,7 @@
         <servlet-class>ru.job4j.servlet.AuthServlet</servlet-class>
     </servlet>
 
+
     <servlet-mapping>
         <servlet-name>PostServlet</servlet-name>
         <url-pattern>/posts.do</url-pattern>
@@ -59,5 +70,6 @@
         <servlet-name>AuthServlet</servlet-name>
         <url-pattern>/auth.do</url-pattern>
     </servlet-mapping>
+
 
 </web-app>
