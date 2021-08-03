@@ -22,7 +22,7 @@ public class JdbcCandidateStore implements Store<Candidate> {
         public static final JdbcCandidateStore HOLDER_INSTANCE = new JdbcCandidateStore();
     }
 
-    public static JdbcCandidateStore getInstance() {
+    public static Store<Candidate> getInstance() {
         return StoreHolder.HOLDER_INSTANCE;
     }
 

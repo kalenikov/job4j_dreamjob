@@ -23,7 +23,7 @@ public class JdbcPostStore implements Store<Post> {
         public static final JdbcPostStore HOLDER_INSTANCE = new JdbcPostStore();
     }
 
-    public static JdbcPostStore getInstance() {
+    public static Store<Post> getInstance() {
         return StoreHolder.HOLDER_INSTANCE;
     }
 
