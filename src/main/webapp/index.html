@@ -14,6 +14,24 @@
             crossorigin="anonymous"></script>
 
     <script type="text/javascript">
+        // $(document).ready(function () {
+        //     $(':text').val('default text');
+        // });
+
+        function addRow() {
+            $('table tr:last').after('<tr>');
+            let newRow = $('table tr:last');
+            // iterate over columns headers in table
+            $('table thead th').each(function () {
+                let colName = $(this).text().toLowerCase();
+                let val = $('#' + colName).val();
+                if (colName === 'n') {
+                    val = $('table tr').length - 1;
+                }
+                newRow.append(`<td>${val}</td>`)
+            });
+        }
+
         function validate() {
             const validatesIds = ['name', 'lastname', 'sex'];
             let isValid = true;
@@ -83,12 +101,12 @@
     <div class="row mt-4 mb-2">
         <h4>Candidates</h4>
     </div>
-    <button type="button" class="btn btn-default" onclick="addRow()">Add row</button>
+    <button type="button" class="btn btn-secondary" onclick="addRow()">Add row</button>
     <div class="row">
         <table class="table table-bordered" id="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">N</th>
                 <th scope="col">Name</th>
                 <th scope="col">Lastname</th>
                 <th scope="col">Sex</th>
