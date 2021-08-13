@@ -1,6 +1,7 @@
 package ru.job4j.store.memory;
 
 import ru.job4j.model.Post;
+import ru.job4j.store.PostStore;
 import ru.job4j.store.Store;
 
 import java.sql.Timestamp;
@@ -10,7 +11,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class MemPostStore implements Store<Post> {
+public class MemPostStore implements PostStore {
     private static final MemPostStore INST = new MemPostStore();
     private final Map<Integer, Post> store = new ConcurrentHashMap<>();
     private static final AtomicInteger ID = new AtomicInteger(10);
@@ -42,5 +43,10 @@ public class MemPostStore implements Store<Post> {
 
     public void removeById(int id) {
         store.remove(id);
+    }
+
+    @Override
+    public Collection<Post> findAll(LocalDateTime startDate, LocalDateTime endDate) {
+        return store.values();
     }
 }

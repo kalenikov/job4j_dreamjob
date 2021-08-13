@@ -18,6 +18,7 @@
                         <th>id</th>
                         <th>name</th>
                         <th>photo</th>
+                        <th>city</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,6 +47,7 @@
                                     </div>
                                 </div>
                             </td>
+                            <td>${candidate.cityId}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

@@ -1,6 +1,7 @@
 package ru.job4j.servlet;
 
 import ru.job4j.model.Post;
+import ru.job4j.store.PostStore;
 import ru.job4j.store.Store;
 import ru.job4j.store.jdbc.JdbcPostStore;
 
@@ -10,13 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Collection;
+
+import static ru.job4j.util.DateTimeUtil.*;
 
 @WebServlet
 public class PostServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Store<Post> repo = JdbcPostStore.getInstance();
+        PostStore repo = JdbcPostStore.getInstance();
         req.setAttribute("user", req.getSession().getAttribute("user"));
         String action = req.getParameter("action");
         if ("NEW".equals(action)) {
@@ -27,7 +32,10 @@ public class PostServlet extends HttpServlet {
             req.setAttribute("post", post);
             req.getRequestDispatcher("WEB-INF/jsp/posts/postForm.jsp").forward(req, resp);
         } else {
-            req.setAttribute("posts", repo.findAll());
+            LocalDate startDate = strToLocalDate(req.getParameter("startDate"));
+            LocalDate endDate = strToLocalDate(req.getParameter("endDate"));
+            Collection<Post> post = repo.findAll(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate));
+            req.setAttribute("posts", post);
             req.getRequestDispatcher("WEB-INF/jsp/posts/posts.jsp").forward(req, resp);
         }
     }

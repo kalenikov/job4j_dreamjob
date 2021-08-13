@@ -3,18 +3,18 @@ package ru.job4j.store.jdbc;
 import lombok.extern.slf4j.Slf4j;
 import ru.job4j.model.Post;
 import ru.job4j.store.ConnectionPool;
-import ru.job4j.store.Store;
+import ru.job4j.store.PostStore;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static ru.job4j.util.DateTimeUtil.localDateTimeToTimestamp;
+
 @Slf4j
-public class JdbcPostStore implements Store<Post> {
+public class JdbcPostStore implements PostStore {
 
     private JdbcPostStore() {
     }
@@ -23,15 +23,24 @@ public class JdbcPostStore implements Store<Post> {
         public static final JdbcPostStore HOLDER_INSTANCE = new JdbcPostStore();
     }
 
-    public static Store<Post> getInstance() {
+    public static PostStore getInstance() {
         return StoreHolder.HOLDER_INSTANCE;
     }
 
+
     @Override
     public Collection<Post> findAll() {
+        return findAll(null, null);
+    }
+
+    @Override
+    public Collection<Post> findAll(LocalDateTime startDate, LocalDateTime endDate) {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = ConnectionPool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")) {
+             PreparedStatement ps = cn.prepareStatement(
+                     "SELECT * FROM post where created BETWEEN ? AND ? order by created")) {
+            ps.setTimestamp(1, localDateTimeToTimestamp(startDate));
+            ps.setTimestamp(2, localDateTimeToTimestamp(endDate));
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
                     posts.add(new Post(
@@ -120,15 +129,23 @@ public class JdbcPostStore implements Store<Post> {
     }
 
     public static void main(String[] args) {
-        Store<Post> store = new JdbcPostStore();
-        store.save(new Post(0, "name1", ""));
-        store.save(new Post(0, "name2", ""));
-        store.save(new Post(0, "name3", ""));
-        for (Post post : store.findAll()) {
-            System.out.println(post.getId() + " " + post.getName());
+        PostStore store = new JdbcPostStore();
+        store.save(new Post(0, "name1", "", Timestamp.valueOf(LocalDateTime.now().minusDays(10))));
+        store.save(new Post(0, "name2", "", Timestamp.valueOf(LocalDateTime.now().minusHours(30))));
+        store.save(new Post(0, "name3", "", Timestamp.valueOf(LocalDateTime.now())));
+//        for (Post post : store.findAll()) {
+//            System.out.println(post.getId() + " " + post.getName());
+//        }
+//        System.out.println(store.findById(3));
+//        store.save(new Post(3, "new name", "new desc"));
+//        System.out.println(store.findAllBetweenDate(LocalDateTime.now().minusDays(10), LocalDateTime.now()));
+        for (Post post : store.findAll(LocalDateTime.now().minusDays(10), LocalDateTime.now())) {
+            System.out.println(post);
         }
-        System.out.println(store.findById(3));
-        store.save(new Post(3, "new name", "new desc"));
-        System.out.println(store.findById(3));
+
+        for (Post post : store.findAll()) {
+            System.out.println(post);
+        }
+
     }
 }

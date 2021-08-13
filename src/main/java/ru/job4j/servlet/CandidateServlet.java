@@ -41,7 +41,11 @@ public class CandidateServlet extends HttpServlet {
         int id = !req.getParameter("id").isEmpty()
                 ? Integer.parseInt(req.getParameter("id"))
                 : 0;
-        repo.save(new Candidate(id, req.getParameter("name")));
+        repo.save(new Candidate(
+                id,
+                req.getParameter("name"),
+                Integer.parseInt(req.getParameter("city_id")))
+        );
         resp.sendRedirect(req.getContextPath() + "/candidates.do");
     }
 
