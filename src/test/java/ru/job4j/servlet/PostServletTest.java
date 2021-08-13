@@ -6,6 +6,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import ru.job4j.model.Post;
+import ru.job4j.store.PostStore;
 import ru.job4j.store.Store;
 import ru.job4j.store.jdbc.JdbcPostStore;
 import ru.job4j.store.memory.MemPostStore;
@@ -25,7 +26,7 @@ public class PostServletTest {
 
     @Test
     public void whenCreatePost() throws IOException {
-        Store<Post> store = MemPostStore.getInstance();
+        PostStore store = MemPostStore.getInstance();
 
         PowerMockito.mockStatic(JdbcPostStore.class);
         PowerMockito.when(JdbcPostStore.getInstance()).thenReturn(store);
