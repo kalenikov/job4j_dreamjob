@@ -19,9 +19,8 @@ public class CityRestController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setContentType("application/json; charset=utf-8");
-        
+
         Store<City> repo = JdbcCityStore.getInstance();
         Collection<City> cities = repo.findAll();
         OutputStream output = resp.getOutputStream();
