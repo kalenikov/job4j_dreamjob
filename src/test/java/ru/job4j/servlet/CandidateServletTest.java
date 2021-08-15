@@ -35,11 +35,13 @@ public class CandidateServletTest {
 
         when(req.getParameter("id")).thenReturn("10");
         when(req.getParameter("name")).thenReturn("name");
+        when(req.getParameter("city_id")).thenReturn("100");
 
         new CandidateServlet().doPost(req, resp);
 
         Candidate result = store.findById(10);
         assertThat(result.getName(), is("name"));
+        assertThat(result.getCityId(), is(100));
     }
 
 }
